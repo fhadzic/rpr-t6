@@ -5,6 +5,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.math.BigInteger;
+
 public class Controller {
 
     public ComboBox mjesto;
@@ -61,10 +63,27 @@ public class Controller {
     }
 
     private boolean ispravanJMBG(String n) {
-        if (n.length() > 12) return false;
+        if (n.length() != 13) return false;
+
         for (int i = 0; i < n.length(); i++) {
             if (!(n.charAt(i) >= '0' && n.charAt(i) <= '9')) return false;
         }
+
+        int kontrolna_cifra = Character.getNumericValue( n.charAt(n.length()-1) );
+        int prvi_dio = Integer.parseInt(n.substring( 6, (n.length()-1) ));
+        int drugi_dio = Integer.parseInt(n.substring(0,6));
+
+
+        int kontrola = 0;
+        for(int i=2; i<8; i++) {
+           kontrola += i*( (prvi_dio%10) + (drugi_dio%10) );
+           prvi_dio /= 10;
+           drugi_dio /= 10;
+        }
+        kontrola = 11 - (kontrola%11);
+
+        if(kontrolna_cifra != kontrola ) return false;
+
         return !n.trim().isEmpty();
     }
 
