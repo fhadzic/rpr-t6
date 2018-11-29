@@ -85,10 +85,15 @@
         <ComboBox fx:id="mjesto" editable="true" GridPane.columnIndex="3" GridPane.rowIndex="2">
             <items>
                 <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Bugojno"/>
+                    <String fx:value="Donji Vakuf"/>
+                    <String fx:value="Gornji Vakuf"/>
+                    <String fx:value="Prozor"/>
+                    <String fx:value="Jablanica"/>
+                    <String fx:value="Mostar"/>
                     <String fx:value="Sarajevo"/>
                     <String fx:value="Konjic"/>
                     <String fx:value="Tuzla"/>
-                    <String fx:value="Mostar"/>
                     <String fx:value="Bihać"/>
                     <String fx:value="Gorazde"/>
                 </FXCollections>
@@ -126,10 +131,10 @@
         <ComboBox fx:id="smjer" prefHeight="27.0" prefWidth="120.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
             <items>
                 <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="RI"/>
-                    <String fx:value="AE"/>
-                    <String fx:value="TK"/>
-                    <String fx:value="EE"/>
+                    <String fx:value="Računarstvo i informatika"/>
+                    <String fx:value="Automatika i elektronika"/>
+                    <String fx:value="Telekomunikacije"/>
+                    <String fx:value="Eelektroenergetika"/>
                 </FXCollections>
             </items>
             <cursor>
@@ -153,7 +158,7 @@
                 </FXCollections>
             </items>
         </ComboBox>
-        <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="194.0" text="Unesi" GridPane.columnIndex="1"
-                GridPane.columnSpan="3" GridPane.rowIndex="8"/>
+        <Button mnemonicParsing = "false" prefHeight = "25.0" prefWidth = "194.0" text = "Unesi"
+                GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8"/>
     </children>
 </GridPane>

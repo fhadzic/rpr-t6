@@ -35,14 +35,23 @@ public class Controller {
 
     private boolean ispravnoImeiPrezime(String n) {
         if (n.length() < 1 || n.length() > 20) return false;
+        String znakovi = "ćčžđČĆŽŠĐ";
         for (int i = 0; i < n.length(); i++) {
-            if (!(n.charAt(i) >= 'A' && n.charAt(i) <= 'Z') && !(n.charAt(i) >= 'a' && n.charAt(i) <= 'z'))
-                return false;
+            if ( !(n.charAt(i) >= 'A' && n.charAt(i) <= 'Z') && !(n.charAt(i) >= 'a' && n.charAt(i) <= 'z')  ) {
+                boolean znak = true;
+                for(int j=0; j<znakovi.length(); j++){
+                    if(n.charAt(i) == znakovi.charAt(j)) znak = false;
+                }
+                if(znak) {
+                    return false;
+                }
+            }
         }
         return !n.trim().isEmpty();
     }
 
     private boolean ispravanDatum(String n) {
+
         for (int i = 0; i < n.length(); i++) {
             if (n.charAt(i) >= '0' && n.charAt(i) <= '9') {
                 for (int j = 0; j < n.length(); j++) if(n.charAt(j) == '/' || n.charAt(j) == '.') return true;
@@ -52,7 +61,7 @@ public class Controller {
     }
 
     private boolean ispravanJMBG(String n) {
-        if (n.length() != 13) return false;
+        if (n.length() > 12) return false;
         for (int i = 0; i < n.length(); i++) {
             if (!(n.charAt(i) >= '0' && n.charAt(i) <= '9')) return false;
         }
@@ -89,6 +98,7 @@ public class Controller {
         emailValidno = false;
         //telefonValidno = false;
         //adresaValidno = false;
+
         ime.getStyleClass().add("nijepopunjeno");
         prezime.getStyleClass().add("nijepopunjeno");
         index.getStyleClass().add("nijepopunjeno");
@@ -98,90 +108,78 @@ public class Controller {
         //telefon.getStyleClass().add("nijepopunjeno"); MOZE BITI PRAZNO
         //adresa.getStyleClass().add("nijepopunjeno"); MOZE BITI PRAZNO
 
-        ime.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (ispravnoImeiPrezime(n)) {
-                    ime.getStyleClass().removeAll("nijepopunjeno");
-                    ime.getStyleClass().add("popunjeno");
-                    imeValidno = true;
-                } else {
-                    ime.getStyleClass().removeAll("popunjeno");
-                    ime.getStyleClass().add("nijepopunjeno");
-                    imeValidno = false;
-                }
+        ime.textProperty().addListener((observableValue, o, n) -> {
+            if (ispravnoImeiPrezime(n)) {
+                ime.getStyleClass().removeAll("nijepopunjeno");
+                ime.getStyleClass().add("popunjeno");
+                imeValidno = true;
+            } else {
+                ime.getStyleClass().removeAll("popunjeno");
+                ime.getStyleClass().add("nijepopunjeno");
+                imeValidno = false;
             }
         });
-        prezime.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (ispravnoImeiPrezime(n)) {
-                    prezime.getStyleClass().removeAll("nijepopunjeno");
-                    prezime.getStyleClass().add("popunjeno");
-                    prezimeValidno = true;
-                } else {
-                    prezime.getStyleClass().removeAll("popunjeno");
-                    prezime.getStyleClass().add("nijepopunjeno");
-                    prezimeValidno = false;
-                }
+
+        prezime.textProperty().addListener((observableValue, o, n) -> {
+            if (ispravnoImeiPrezime(n)) {
+                prezime.getStyleClass().removeAll("nijepopunjeno");
+                prezime.getStyleClass().add("popunjeno");
+                prezimeValidno = true;
+            } else {
+                prezime.getStyleClass().removeAll("popunjeno");
+                prezime.getStyleClass().add("nijepopunjeno");
+                prezimeValidno = false;
             }
         });
-        index.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (ispravanIndex(n)) {
-                    index.getStyleClass().removeAll("nijepopunjeno");
-                    index.getStyleClass().add("popunjeno");
-                    indeksValidan = true;
-                } else {
-                    index.getStyleClass().removeAll("popunjeno");
-                    index.getStyleClass().add("nijepopunjeno");
-                    indeksValidan = false;
-                }
+
+        index.textProperty().addListener((observableValue, o, n) -> {
+            if (ispravanIndex(n)) {
+                index.getStyleClass().removeAll("nijepopunjeno");
+                index.getStyleClass().add("popunjeno");
+                indeksValidan = true;
+            } else {
+                index.getStyleClass().removeAll("popunjeno");
+                index.getStyleClass().add("nijepopunjeno");
+                indeksValidan = false;
             }
         });
-        jmbg.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (ispravanJMBG(n)) {
-                    jmbg.getStyleClass().removeAll("nijepopunjeno");
-                    jmbg.getStyleClass().add("popunjeno");
-                    jmbgValidno = true;
-                } else {
-                    jmbg.getStyleClass().removeAll("popunjeno");
-                    jmbg.getStyleClass().add("nijepopunjeno");
-                    jmbgValidno = false;
-                }
+
+        jmbg.textProperty().addListener((observableValue, o, n) -> {
+            if (ispravanJMBG(n)) {
+                jmbg.getStyleClass().removeAll("nijepopunjeno");
+                jmbg.getStyleClass().add("popunjeno");
+                jmbgValidno = true;
+            } else {
+                jmbg.getStyleClass().removeAll("popunjeno");
+                jmbg.getStyleClass().add("nijepopunjeno");
+                jmbgValidno = false;
             }
         });
-        datum.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (ispravanDatum(n)) {
-                    datum.getStyleClass().removeAll("nijepopunjeno");
-                    datum.getStyleClass().add("popunjeno");
-                    datumValidno = true;
-                } else {
-                    datum.getStyleClass().removeAll("popunjeno");
-                    datum.getStyleClass().add("nijepopunjeno");
-                    datumValidno = false;
-                }
+
+        datum.textProperty().addListener((observableValue, o, n) -> {
+            if (ispravanDatum(n)) {
+                datum.getStyleClass().removeAll("nijepopunjeno");
+                datum.getStyleClass().add("popunjeno");
+                datumValidno = true;
+            } else {
+                datum.getStyleClass().removeAll("popunjeno");
+                datum.getStyleClass().add("nijepopunjeno");
+                datumValidno = false;
             }
         });
-        email.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
-                if (ispravanEmail(n)) {
-                    email.getStyleClass().removeAll("nijepopunjeno");
-                    email.getStyleClass().add("popunjeno");
-                    emailValidno = true;
-                } else {
-                    email.getStyleClass().removeAll("popunjeno");
-                    email.getStyleClass().add("nijepopunjeno");
-                    emailValidno = false;
-                }
+
+        email.textProperty().addListener((observableValue, o, n) -> {
+            if (ispravanEmail(n)) {
+                email.getStyleClass().removeAll("nijepopunjeno");
+                email.getStyleClass().add("popunjeno");
+                emailValidno = true;
+            } else {
+                email.getStyleClass().removeAll("popunjeno");
+                email.getStyleClass().add("nijepopunjeno");
+                emailValidno = false;
             }
         });
+
         /*adresa.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String o, String n) {
