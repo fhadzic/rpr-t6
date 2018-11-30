@@ -69,6 +69,9 @@ public class Controller {
             if (!(n.charAt(i) >= '0' && n.charAt(i) <= '9')) return false;
         }
 
+        //DDMMGGGRRBBBK = ABVGDĐEŽZIJKL
+        //L = 11 - (( 7*(A+E) + 6*(B+Ž) + 5*(V+Z) + 4*(G+I) + 3*(D+J) + 2*(Đ+K) ) % 11)
+
         int kontrolna_cifra = Character.getNumericValue( n.charAt(n.length()-1) );
         int prvi_dio = Integer.parseInt(n.substring( 6, (n.length()-1) ));
         int drugi_dio = Integer.parseInt(n.substring(0,6));
@@ -88,7 +91,18 @@ public class Controller {
     }
 
     private boolean ispravanEmail(String n) {
-        for (int i = 0; i < n.length(); i++) if (n.charAt(i) == '@') return true;
+        boolean et = false;
+        int k = 0;
+
+        for (int i = 0; i < n.length(); i++) {
+            if (n.charAt(i) == '@'){
+                if(i!=0 && i < n.length()-4) et = true;
+
+            }
+            if (( n.substring((n.length() - 4), n.length()).contentEquals(".com") || n.substring((n.length() - 3 ), n.length()).contentEquals(".ba") ) && et) {
+                return true;
+            }
+        }
         return false;
     }
 
