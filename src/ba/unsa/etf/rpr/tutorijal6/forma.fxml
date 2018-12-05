@@ -153,7 +153,7 @@
                 </FXCollections>
             </items>
         </ComboBox>
-        <Button mnemonicParsing = "false" prefHeight = "25.0" prefWidth = "194.0" text = "Unesi"
+        <Button fx:id="unesi" onAction="#validanUnos" text="Unesi" mnemonicParsing = "false" prefHeight = "25.0" prefWidth = "194.0"
                 GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="8"/>
     </children>
 </GridPane>

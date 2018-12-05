@@ -2,6 +2,7 @@ package ba.unsa.etf.rpr.tutorijal6;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -22,12 +23,14 @@ public class Controller {
     public TextField email;
     public TextField adresa;
     public TextField telefon;
+    public Button unesi;
     private boolean imeValidno;
     private boolean prezimeValidno;
     private boolean indeksValidan;
     private boolean jmbgValidno;
     private boolean datumValidno;
     private boolean emailValidno;
+    private String jedinstveni = "";
     //private boolean adresaValidno;
     //private boolean telefonValidno;
 
@@ -53,12 +56,21 @@ public class Controller {
     }
 
     private boolean ispravanDatum(String n) {
+        if(n.length() > 10) return false;
 
         for (int i = 0; i < n.length(); i++) {
-            if (n.charAt(i) >= '0' && n.charAt(i) <= '9') {
-                for (int j = 0; j < n.length(); j++) if(n.charAt(j) == '/' || n.charAt(j) == '.') return true;
+            if ( i != 2 && i != 5 && !(n.charAt(i) >= '0' && n.charAt(i) <= '9')) {
+                return false;
+            }
+            if((i == 2 || i ==5)&& !(n.charAt(i) == '/' || n.charAt(i) == '.')){
+                return false;
             }
         }
+
+        String dateBezRazmaka = n.substring(0, 2) + n.substring(3,5) + n.substring(7,n.length());
+
+        if(dateBezRazmaka.equals(jedinstveni)) return true;
+
         return false;
     }
 
@@ -87,6 +99,8 @@ public class Controller {
 
         if(kontrolna_cifra != kontrola ) return false;
 
+        jedinstveni = n.substring(0, 7);
+
         return !n.trim().isEmpty();
     }
 
@@ -97,11 +111,11 @@ public class Controller {
         for (int i = 0; i < n.length(); i++) {
             if (n.charAt(i) == '@'){
                 if(i!=0 && i < n.length()-4) et = true;
-
+                k++;
             }
-            if (( n.substring((n.length() - 4), n.length()).contentEquals(".com") || n.substring((n.length() - 3 ), n.length()).contentEquals(".ba") ) && et) {
-                return true;
-            }
+        }
+        if (( n.substring((n.length() - 4), n.length()).contentEquals(".com") || n.substring((n.length() - 3 ), n.length()).contentEquals(".ba") ) && et && k==1) {
+            return true;
         }
         return false;
     }
@@ -110,6 +124,14 @@ public class Controller {
         if (n.length() > 5) return false;
         for (int i = 0; i < n.length(); i++) if (!(n.charAt(i) >= '0' && n.charAt(i) <= '9')) return false;
         return !n.trim().isEmpty();
+    }
+
+    public void validanUnos(ActionEvent actionEvent) {
+        if(formularValidan()){
+            System.out.println("Unos validan, upravo ste pristupili fakultetskom sistemu. Želimo vam prijatno korištenje!");
+        }else{
+            System.out.println("Unos nije validan, molimo popravite!");
+        }
     }
 
     /*private boolean ispravnaAdresa(String n) {
@@ -242,7 +264,5 @@ public class Controller {
             }
         }); ADRESA I TELEFON IPAK MOGU BITI PRAZNI */
     }
-
-
 }
 
